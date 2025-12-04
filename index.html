@@ -4,13 +4,12 @@
   <meta charset="UTF-8">
   <title>Certificat de formation – Butzemillen</title>
 
-  <!-- Police proche Avenir -->
+  <!-- Police Avenir -->
   <link href="https://fonts.cdnfonts.com/css/avenir" rel="stylesheet">
 
-<!-- html2canvas + jsPDF -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
+  <!-- html2canvas + jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <style>
     * { box-sizing: border-box; }
@@ -267,7 +266,7 @@
       transform: translateY(-0.5px);
     }
 
-    /* Carte aperçu */
+    /* Carte apercu */
     #preview-wrapper {
       background: #ffffff;
       padding: 10px;
@@ -295,17 +294,14 @@
       color: #777;
     }
 
-   #preview {
-  position: relative;
-  width: 1536px;
-  height: 1086px;
-  background-image: url('Certificat de formation - vierge.png'); 
-  background-size: cover;
-  background-position: center;
-  border: 1px solid #d5d5dd;
-  overflow: hidden;
-}
-
+    /* Apercu certificat - format A4 paysage (ratio 297:210) */
+    #preview {
+      position: relative;
+      width: 1188px;
+      height: 840px;
+      background: #ffffff;
+      border: 1px solid #d5d5dd;
+      overflow: hidden;
     }
 
     .preview-scroller {
@@ -314,13 +310,28 @@
       border-radius: 10px;
     }
 
+    /* Elements decoratifs */
+    .decor-icon {
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .decor-circle {
+      position: absolute;
+      border-radius: 50%;
+      background-color: #91268f;
+      pointer-events: none;
+    }
+
+    /* Couches de texte */
     .text-layer {
       position: absolute;
       pointer-events: none;
       white-space: normal;
-      line-height: 1.25;
-      font-size: 18px;
-      letter-spacing: 0.4px;
+      line-height: 1.3;
+      font-size: 16px;
+      letter-spacing: 0.3px;
       color: #91268f;
       font-family: 'Avenir', sans-serif;
       text-align: left;
@@ -328,7 +339,7 @@
 
     .line-layer {
       position: absolute;
-      background: #f6c843; /* jaune */
+      background: #91268f;
       pointer-events: none;
     }
 
@@ -344,7 +355,7 @@
   <div>
     <div class="topbar-title">Certificats de formation internes</div>
   </div>
-  <div class="topbar-sub">Butzemillen – Crèches &amp; foyers de jour</div>
+  <div class="topbar-sub">Butzemillen – Creches &amp; foyers de jour</div>
 </div>
 
 <div class="container">
@@ -354,23 +365,23 @@
     <div id="formulaire">
       <div id="formulaire-header">
         <h2>Formulaire certificat</h2>
-        <span>Jusqu’à 5 jours • &lt; 1 min</span>
+        <span>Jusqu'a 5 jours</span>
       </div>
 
       <fieldset>
-        <legend>1. Informations générales</legend>
+        <legend>1. Informations generales</legend>
 
-        <label for="nomPrenom">Participant·e·s</label>
+        <label for="nomPrenom">Participant(e)s</label>
         <input type="text" id="nomPrenom"
-               placeholder="GALASSO Alexandra, JANSSENS Tinne, ..." />
-        <small>Indiquer le ou les noms, séparés par des virgules.</small>
+               placeholder="NOM Prenom, NOM Prenom, NOM Prenom" />
+        <small>Indiquer le ou les noms, separes par des virgules.</small>
 
-        <label for="formation">Intitulé de la formation</label>
+        <label for="formation">Intitule de la formation</label>
         <input type="text" id="formation"
-               placeholder="Éducation non formelle et soins de l’enfant" />
+               placeholder="Education non formelle et soins de l'enfant" />
         <div class="chips">
-          <span class="chip" onclick="presetFormation('Éducation non formelle et soins de l’enfant')">
-            Intitulé standard
+          <span class="chip" onclick="presetFormation('Education non formelle et soins de l\'enfant')">
+            Intitule standard
           </span>
         </div>
 
@@ -379,8 +390,8 @@
       </fieldset>
 
       <fieldset>
-        <legend>2. Séances &amp; durée (max. 5 jours)</legend>
-        <small class="muted">Cocher les jours utilisés, puis saisir date et horaires.</small>
+        <legend>2. Seances &amp; duree (max. 5 jours)</legend>
+        <small class="muted">Cocher les jours utilises, puis saisir date et horaires.</small>
 
         <!-- Jour 1 -->
         <div class="day-block">
@@ -402,11 +413,11 @@
                   <input type="time" id="day1Start" onchange="updateTotal()" />
                   <input type="time" id="day1End" onchange="updateTotal()" />
                 </div>
-                <small>Début – fin</small>
+                <small>Debut – fin</small>
               </div>
             </div>
-            <label for="day1Titre">Intitulé de la séance</label>
-            <input type="text" id="day1Titre" placeholder="Éducation non formelle" />
+            <label for="day1Titre">Intitule de la seance</label>
+            <input type="text" id="day1Titre" placeholder="Education non formelle" />
           </div>
         </div>
 
@@ -430,11 +441,11 @@
                   <input type="time" id="day2Start" onchange="updateTotal()" />
                   <input type="time" id="day2End" onchange="updateTotal()" />
                 </div>
-                <small>Début – fin</small>
+                <small>Debut – fin</small>
               </div>
             </div>
-            <label for="day2Titre">Intitulé de la séance</label>
-            <input type="text" id="day2Titre" placeholder="Soins de l’enfant" />
+            <label for="day2Titre">Intitule de la seance</label>
+            <input type="text" id="day2Titre" placeholder="Soins de l'enfant" />
           </div>
         </div>
 
@@ -458,10 +469,10 @@
                   <input type="time" id="day3Start" onchange="updateTotal()" />
                   <input type="time" id="day3End" onchange="updateTotal()" />
                 </div>
-                <small>Début – fin</small>
+                <small>Debut – fin</small>
               </div>
             </div>
-            <label for="day3Titre">Intitulé de la séance</label>
+            <label for="day3Titre">Intitule de la seance</label>
             <input type="text" id="day3Titre" placeholder="..." />
           </div>
         </div>
@@ -486,10 +497,10 @@
                   <input type="time" id="day4Start" onchange="updateTotal()" />
                   <input type="time" id="day4End" onchange="updateTotal()" />
                 </div>
-                <small>Début – fin</small>
+                <small>Debut – fin</small>
               </div>
             </div>
-            <label for="day4Titre">Intitulé de la séance</label>
+            <label for="day4Titre">Intitule de la seance</label>
             <input type="text" id="day4Titre" placeholder="..." />
           </div>
         </div>
@@ -514,16 +525,16 @@
                   <input type="time" id="day5Start" onchange="updateTotal()" />
                   <input type="time" id="day5End" onchange="updateTotal()" />
                 </div>
-                <small>Début – fin</small>
+                <small>Debut – fin</small>
               </div>
             </div>
-            <label for="day5Titre">Intitulé de la séance</label>
+            <label for="day5Titre">Intitule de la seance</label>
             <input type="text" id="day5Titre" placeholder="..." />
           </div>
         </div>
 
         <div id="total-line">
-          <span class="muted">Durée totale calculée :</span>
+          <span class="muted">Duree totale calculee :</span>
           <span id="totalHoursDisplay">0 h</span>
         </div>
       </fieldset>
@@ -531,32 +542,32 @@
       <fieldset>
         <legend>3. Signature &amp; date</legend>
 
-        <label for="faitLieu">Lieu de rédaction</label>
+        <label for="faitLieu">Lieu de redaction</label>
         <input type="text" id="faitLieu" placeholder="Ettelbruck" />
 
-        <label for="faitDate">Date de rédaction</label>
+        <label for="faitDate">Date de redaction</label>
         <input type="date" id="faitDate" />
-        <small>Affiché en bas du certificat (« Fait à …, le … »).</small>
+        <small>Affiche en bas du certificat (« Fait a …, le … »).</small>
 
         <label for="signName">Nom / fonction du signataire</label>
         <input type="text" id="signName" placeholder="Nom du directeur / de la directrice" />
 
         <label for="signatureFile">Signature (image)</label>
         <input type="file" id="signatureFile" accept="image/*" onchange="loadSignature(event)">
-        <small>Importer une signature scannée (PNG/JPG) sur fond blanc ou transparent.</small>
+        <small>Importer une signature scannee (PNG/JPG) sur fond blanc ou transparent.</small>
       </fieldset>
 
       <div id="buttons">
-        <button type="button" class="secondary" onclick="generatePreview()">Mettre à jour l’aperçu</button>
-        <button type="button" onclick="generatePDF()">Télécharger le PDF</button>
+        <button type="button" class="secondary" onclick="generatePreview()">Mettre a jour l'apercu</button>
+        <button type="button" onclick="generatePDF()">Telecharger le PDF</button>
       </div>
     </div>
 
-    <!-- APERÇU CERTIFICAT -->
+    <!-- APERCU CERTIFICAT -->
     <div id="preview-wrapper">
       <div id="preview-header">
-        <h3>Aperçu du certificat</h3>
-        <span>Format PDF</span>
+        <h3>Apercu du certificat</h3>
+        <span>Format PDF A4 paysage</span>
       </div>
       <div class="preview-scroller">
         <div id="preview"></div>
@@ -567,9 +578,45 @@
 </div>
 
 <script>
+  /******************************
+   * CONFIGURATION
+   ******************************/
+
+  // Chemins des images locales
+  const ICON_YELLOW = '20251020-icons-butzemillen-03-149.png';
+  const LOGO_SVG = '20251020-logo-butzemillen_bm-logo-color-cr-fdj-01.svg';
+
+  // Couleurs
+  const PURPLE = '#91268f';
+  const YELLOW = '#f6c843';
+
+  // Dimensions du preview (A4 paysage en pixels)
+  const PREVIEW_WIDTH = 1188;
+  const PREVIEW_HEIGHT = 840;
+
+  // Centre horizontal
+  const CENTER_X = PREVIEW_WIDTH / 2;
+
+  // Parametres du tableau
+  const TABLE_TOP = 520;
+  const TABLE_LEFT = 220;
+  const TABLE_WIDTH = 750;
+  const ROW_HEIGHT = 32;
+
+  const COL1_WIDTH = 140; // Date
+  const COL2_WIDTH = 160; // Horaire
+  const COL3_WIDTH = TABLE_WIDTH - COL1_WIDTH - COL2_WIDTH; // Intitule
+
+  // Position signature
+  const SIGN_CENTER_X = 950;
+
+  // Stockage signature
   let signatureDataUrl = null;
 
-  // === Utilitaires ===
+  /******************************
+   * UTILITAIRES
+   ******************************/
+
   function presetFormation(value) {
     document.getElementById('formation').value = value;
     generatePreview();
@@ -598,9 +645,9 @@
 
   function calcDayHours(startId, endId) {
     const startStr = document.getElementById(startId).value;
-    const endStr   = document.getElementById(endId).value;
+    const endStr = document.getElementById(endId).value;
     const startVal = parseTimeToHours(startStr);
-    const endVal   = parseTimeToHours(endStr);
+    const endVal = parseTimeToHours(endStr);
     return Math.max(endVal - startVal, 0);
   }
 
@@ -646,30 +693,90 @@
     reader.readAsDataURL(file);
   }
 
-  function clearLayers() {
-    document.querySelectorAll('.text-layer').forEach(el => el.remove());
-    document.querySelectorAll('.line-layer').forEach(el => el.remove());
-    document.querySelectorAll('.signature-layer').forEach(el => el.remove());
+  /******************************
+   * CREATION ELEMENTS PREVIEW
+   ******************************/
+
+  function clearPreview() {
+    const preview = document.getElementById('preview');
+    // Garder uniquement les elements de base
+    preview.innerHTML = '';
   }
 
-  function createTextLayer(htmlContent, x, y) {
+  function createDecorCircle(x, y, size, opacity = 1) {
     const div = document.createElement('div');
-    div.className = 'text-layer';
-    div.style.left = x + 'px';
-    div.style.top  = y + 'px';
-    div.innerHTML  = htmlContent;
+    div.className = 'decor-circle';
+    div.style.left = (x - size/2) + 'px';
+    div.style.top = (y - size/2) + 'px';
+    div.style.width = size + 'px';
+    div.style.height = size + 'px';
+    div.style.opacity = opacity;
     document.getElementById('preview').appendChild(div);
   }
 
-  function createCenteredTextLayerAtX(htmlContent, centerX, y) {
+  function createDecorIcon(src, x, y, width, anchor = 'center') {
+    const img = document.createElement('img');
+    img.src = src;
+    img.className = 'decor-icon';
+    img.style.width = width + 'px';
+
+    if (anchor === 'center') {
+      img.style.left = (x - width/2) + 'px';
+    } else if (anchor === 'left') {
+      img.style.left = x + 'px';
+    }
+    img.style.top = y + 'px';
+    document.getElementById('preview').appendChild(img);
+  }
+
+  function createTextLayer(htmlContent, x, y, align = 'left', maxWidth = null) {
     const div = document.createElement('div');
     div.className = 'text-layer';
     div.style.top = y + 'px';
-    div.style.left = '0px';
     div.innerHTML = htmlContent;
+
+    if (maxWidth) {
+      div.style.maxWidth = maxWidth + 'px';
+    }
+
+    if (align === 'center') {
+      div.style.textAlign = 'center';
+      div.style.left = '0px';
+      document.getElementById('preview').appendChild(div);
+      const w = div.offsetWidth;
+      div.style.left = (x - w/2) + 'px';
+    } else if (align === 'right') {
+      div.style.textAlign = 'right';
+      div.style.left = '0px';
+      document.getElementById('preview').appendChild(div);
+      const w = div.offsetWidth;
+      div.style.left = (x - w) + 'px';
+    } else {
+      div.style.left = x + 'px';
+      document.getElementById('preview').appendChild(div);
+    }
+  }
+
+  function createHLine(x, y, width, color = PURPLE) {
+    const div = document.createElement('div');
+    div.className = 'line-layer';
+    div.style.left = x + 'px';
+    div.style.top = y + 'px';
+    div.style.width = width + 'px';
+    div.style.height = '1px';
+    div.style.background = color;
     document.getElementById('preview').appendChild(div);
-    const w = div.offsetWidth;
-    div.style.left = (centerX - w / 2) + 'px';
+  }
+
+  function createVLine(x, y, height, color = PURPLE) {
+    const div = document.createElement('div');
+    div.className = 'line-layer';
+    div.style.left = x + 'px';
+    div.style.top = y + 'px';
+    div.style.width = '1px';
+    div.style.height = height + 'px';
+    div.style.background = color;
+    document.getElementById('preview').appendChild(div);
   }
 
   function createSignatureImage(centerX, y) {
@@ -679,260 +786,315 @@
     img.className = 'signature-layer';
     img.style.top = y + 'px';
     img.style.left = '0px';
-    img.onload = function () {
-      const maxWidth = 260;
+    img.onload = function() {
+      const maxWidth = 180;
+      const maxHeight = 80;
       const ratio = img.naturalHeight / img.naturalWidth;
-      const w = Math.min(maxWidth, img.naturalWidth);
-      img.style.width  = w + 'px';
-      img.style.height = (w * ratio) + 'px';
-      img.style.left = (centerX - w / 2) + 'px';
+      let w = Math.min(maxWidth, img.naturalWidth);
+      let h = w * ratio;
+      if (h > maxHeight) {
+        h = maxHeight;
+        w = h / ratio;
+      }
+      img.style.width = w + 'px';
+      img.style.height = h + 'px';
+      img.style.left = (centerX - w/2) + 'px';
     };
     document.getElementById('preview').appendChild(img);
   }
 
-  // === Paramètres tableau ===
-  const TABLE_TEXT_TOP = 652;
-  const TABLE_TOP      = TABLE_TEXT_TOP + 28;
-  const TABLE_LEFT     = 330;
-  const TABLE_WIDTH    = 860;
-  const ROW_SPACING    = 38;
+  /******************************
+   * COLLECTE DES DONNEES
+   ******************************/
 
-  const DATE_X  = TABLE_LEFT + 12;
-  const TIME_X  = DATE_X + 180;
-  const TITRE_X = TIME_X + 240;
-
-  const V1_X = TIME_X - 18;
-  const V2_X = TITRE_X - 18;
-
-  const SIGN_CENTER_X = 1180; // bloc "Fait à" + signature, à droite
-
-  function createHLine(y) {
-    const div = document.createElement('div');
-    div.className = 'line-layer';
-    div.style.left = TABLE_LEFT + 'px';
-    div.style.top  = y + 'px';
-    div.style.width  = TABLE_WIDTH + 'px';
-    div.style.height = '2px';
-    document.getElementById('preview').appendChild(div);
-  }
-
-  function createVLine(x, height) {
-    const div = document.createElement('div');
-    div.className = 'line-layer';
-    div.style.left = x + 'px';
-    div.style.top  = TABLE_TOP + 'px';
-    div.style.width  = '2px';
-    div.style.height = height + 'px';
-    document.getElementById('preview').appendChild(div);
-  }
-
-  // === Génération de l’aperçu ===
-  function generatePreview() {
-    clearLayers();
-
-    const centerX = 768;
-
+  function collectFormData() {
     const nomPrenom = document.getElementById('nomPrenom').value.trim();
     const formation = document.getElementById('formation').value.trim();
-    const lieuForm  = document.getElementById('lieuFormation').value.trim();
-    const faitLieu  = document.getElementById('faitLieu').value.trim();
-    const faitDate  = document.getElementById('faitDate').value.trim();
-    const signName  = document.getElementById('signName').value.trim();
+    const lieuForm = document.getElementById('lieuFormation').value.trim();
+    const faitLieu = document.getElementById('faitLieu').value.trim();
+    const faitDate = document.getElementById('faitDate').value.trim();
+    const signName = document.getElementById('signName').value.trim();
 
-    // Jours actifs
     const days = [];
     for (let i = 1; i <= 5; i++) {
       const enable = document.getElementById(`day${i}Enable`).checked;
       if (!enable) continue;
-      const date  = document.getElementById(`day${i}Date`).value.trim();
+      const date = document.getElementById(`day${i}Date`).value.trim();
       const start = document.getElementById(`day${i}Start`).value;
-      const end   = document.getElementById(`day${i}End`).value;
+      const end = document.getElementById(`day${i}End`).value;
       const hours = calcDayHours(`day${i}Start`, `day${i}End`);
       const titre = document.getElementById(`day${i}Titre`).value.trim();
       if (!date && !start && !end && !titre) continue;
       days.push({ date, start, end, hours, titre });
     }
 
-    // Total heures
     let totalHours = 0;
     days.forEach(d => totalHours += d.hours);
     totalHours = Math.round(totalHours * 100) / 100;
+
+    return {
+      nomPrenom,
+      formation,
+      lieuForm,
+      faitLieu,
+      faitDate,
+      signName,
+      days,
+      totalHours
+    };
+  }
+
+  /******************************
+   * GENERATION APERCU
+   ******************************/
+
+  function generatePreview() {
+    clearPreview();
+
+    const {
+      nomPrenom,
+      formation,
+      lieuForm,
+      faitLieu,
+      faitDate,
+      signName,
+      days,
+      totalHours
+    } = collectFormData();
+
+    // Decorations: Cercles violets
+    // Grand cercle en bas a gauche (coupe)
+    createDecorCircle(-60, PREVIEW_HEIGHT + 60, 300);
+
+    // Cercle moyen a gauche (centre vertical)
+    createDecorCircle(-40, 280, 180);
+
+    // Grand cercle en bas a droite (coupe)
+    createDecorCircle(PREVIEW_WIDTH + 80, PREVIEW_HEIGHT - 40, 280);
+
+    // Icone jaune en haut a gauche
+    createDecorIcon(ICON_YELLOW, -80, -80, 380, 'left');
+
+    // Logo centre en haut
+    createDecorIcon(LOGO_SVG, CENTER_X, 30, 220, 'center');
+
+    // Titre "Certificat"
+    createTextLayer(
+      '<span style="font-size:36px; font-weight:bold;">Certificat</span>',
+      CENTER_X, 150, 'center'
+    );
+
+    // Sous-titre
+    createTextLayer(
+      '<span style="font-size:22px;">de formation interne</span>',
+      CENTER_X, 195, 'center'
+    );
+
+    // Ligne decorative jaune sous le titre
+    const lineY = 230;
+    const lineWidth = 80;
+    const lineDiv = document.createElement('div');
+    lineDiv.className = 'line-layer';
+    lineDiv.style.left = (CENTER_X - lineWidth/2) + 'px';
+    lineDiv.style.top = lineY + 'px';
+    lineDiv.style.width = lineWidth + 'px';
+    lineDiv.style.height = '3px';
+    lineDiv.style.background = YELLOW;
+    document.getElementById('preview').appendChild(lineDiv);
+
+    // Texte principal
+    createTextLayer(
+      '<span><strong>Butzemillen s.a.r.l</strong> certifie que</span>',
+      CENTER_X, 270, 'center'
+    );
+
+    createTextLayer(
+      `<span style="font-weight:bold;">${nomPrenom || 'NOM Prenom, NOM Prenom, NOM Prenom'}</span>`,
+      CENTER_X, 310, 'center'
+    );
+
+    createTextLayer(
+      '<span>ont participe(e)s a la formation intitulee</span>',
+      CENTER_X, 350, 'center'
+    );
+
+    createTextLayer(
+      `<span style="font-weight:bold;">« ${formation || "Education non formelle et soins de l'enfant"} »</span>`,
+      CENTER_X, 385, 'center'
+    );
+
+    createTextLayer(
+      `<span>ayant eu lieu a <strong>${lieuForm || 'Ettelbruck'}</strong>, le :</span>`,
+      CENTER_X, 430, 'center'
+    );
+
+    // TABLEAU
+    const nbRows = Math.max(days.length, 1);
+    const tableHeight = ROW_HEIGHT * nbRows;
+
+    // En-tetes du tableau
+    const headerY = TABLE_TOP - 25;
+    const col1Center = TABLE_LEFT + COL1_WIDTH / 2;
+    const col2Center = TABLE_LEFT + COL1_WIDTH + COL2_WIDTH / 2;
+    const col3Center = TABLE_LEFT + COL1_WIDTH + COL2_WIDTH + COL3_WIDTH / 2;
+
+    createTextLayer(
+      '<span style="font-weight:bold; font-size:14px;">Date</span>',
+      col1Center, headerY, 'center'
+    );
+    createTextLayer(
+      '<span style="font-weight:bold; font-size:14px;">Horaire</span>',
+      col2Center, headerY, 'center'
+    );
+    createTextLayer(
+      '<span style="font-weight:bold; font-size:14px;">Intitule de la seance</span>',
+      col3Center, headerY, 'center'
+    );
+
+    // Lignes horizontales du tableau
+    for (let i = 0; i <= nbRows; i++) {
+      createHLine(TABLE_LEFT, TABLE_TOP + i * ROW_HEIGHT, TABLE_WIDTH);
+    }
+
+    // Lignes verticales internes
+    createVLine(TABLE_LEFT + COL1_WIDTH, TABLE_TOP, tableHeight);
+    createVLine(TABLE_LEFT + COL1_WIDTH + COL2_WIDTH, TABLE_TOP, tableHeight);
+
+    // Contenu du tableau
+    for (let i = 0; i < nbRows; i++) {
+      const rowY = TABLE_TOP + i * ROW_HEIGHT + ROW_HEIGHT / 2 - 6;
+      const d = days[i] || {};
+
+      if (d.date) {
+        createTextLayer(
+          `<span style="font-size:14px;">${formatDate(d.date)}</span>`,
+          col1Center, rowY, 'center'
+        );
+      }
+      if (d.start || d.end) {
+        createTextLayer(
+          `<span style="font-size:14px;">${formatTimeDisplay(d.start)} – ${formatTimeDisplay(d.end)}</span>`,
+          col2Center, rowY, 'center'
+        );
+      }
+      if (d.titre) {
+        createTextLayer(
+          `<span style="font-size:14px;">${d.titre}</span>`,
+          col3Center, rowY, 'center'
+        );
+      }
+    }
+
+    // Total d'heures
+    const totalY = TABLE_TOP + tableHeight + 15;
     const heureLabel = (totalHours === 1) ? 'heure' : 'heures';
     const totalStr = totalHours > 0
       ? `${totalHours.toString().replace('.', ',')} ${heureLabel}`
-      : '';
+      : '0 heure';
 
-    // Nombre de lignes du tableau = nombre de jours saisis (min 1, max 5)
-    const nbRows = Math.max(days.length, 1);
-    const tableBottom = TABLE_TOP + ROW_SPACING * nbRows;
-    const tableHeight = tableBottom - TABLE_TOP;
-
-    // Titres du tableau
     createTextLayer(
-      `<span style="font-weight:bold; font-size:18px;">Date</span>`,
-      DATE_X, TABLE_TEXT_TOP
-    );
-    createTextLayer(
-      `<span style="font-weight:bold; font-size:18px;">Horaire</span>`,
-      TIME_X, TABLE_TEXT_TOP
-    );
-    createTextLayer(
-      `<span style="font-weight:bold; font-size:18px;">Intitulé de la séance</span>`,
-      TITRE_X, TABLE_TEXT_TOP
+      `<span style="font-weight:bold; font-size:14px;">Total d'heures de formation : ${totalStr}</span>`,
+      TABLE_LEFT + TABLE_WIDTH, totalY, 'right'
     );
 
-    // Lignes horizontales
-    for (let i = 0; i <= nbRows; i++) {
-      createHLine(TABLE_TOP + i * ROW_SPACING);
-    }
+    // Bloc signature (a droite)
+    const signBlockY = totalY + 40;
 
-    // Lignes verticales
-    createVLine(V1_X, tableHeight);
-    createVLine(V2_X, tableHeight);
+    createTextLayer(
+      `<span style="font-weight:bold; font-size:14px;">Fait a ${faitLieu || 'Ettelbruck'}, le ${formatDate(faitDate) || 'JJ/MM/AAAA'}</span>`,
+      SIGN_CENTER_X, signBlockY, 'center'
+    );
 
-    // Lignes de texte jour par jour
-    let rowIndex = 0;
-    days.forEach(d => {
-      if (rowIndex >= nbRows) return;
-      const y = TABLE_TOP + 10 + rowIndex * ROW_SPACING;
-      rowIndex++;
+    createTextLayer(
+      '<span style="font-size:12px;">(Signature et cachet)</span>',
+      SIGN_CENTER_X, signBlockY + 20, 'center'
+    );
 
-      if (d.date)  createTextLayer(formatDate(d.date), DATE_X, y);
-      if (d.start || d.end) {
-        createTextLayer(
-          `${formatTimeDisplay(d.start)} – ${formatTimeDisplay(d.end)}`,
-          TIME_X, y
-        );
-      }
-      if (d.titre) createTextLayer(d.titre, TITRE_X, y);
-    });
-
-    // Texte principal centré
-    const bigTextHTML = `
-<div style="text-align:center;">
-  <span style="font-weight:bold;">Butzemillen s.à.r.l</span>
-  <span> certifie que</span>
-  <br><br>
-  <span style="font-weight:bold;">
-    ${nomPrenom || 'GALASSO Alexandra, JANSSENS Tinne, ...'}
-  </span>
-  <br><br>
-  <span>ont participé(e)s à la formation intitulée</span>
-  <br>
-  <span style="font-weight:bold;">
-    « ${formation || 'Éducation non formelle et soins de l’enfant'} »
-  </span>
-  <br><br>
-  <span>ayant eu lieu à </span>
-  <span style="font-weight:bold;">${lieuForm || 'Ettelbruck'}</span>
-  <span>, le :</span>
-</div>`;
-    createCenteredTextLayerAtX(bigTextHTML, centerX, 400);
-
-    // --- Bas de page ---
-
-    // Total d'heures centré sous le tableau
-    const totalY = TABLE_TOP + ROW_SPACING * nbRows + 40;
-
-    if (totalStr) {
-      createCenteredTextLayerAtX(
-        `<span style="font-weight:bold;">
-          Total d’heures de formation : ${totalStr}
-        </span>`,
-        centerX,
-        totalY
-      );
-    }
-
-    // Bloc "Fait à..." + signature à droite
-    const faitY     = totalY;        // même ligne que le total, à droite
-    const sigTextY  = totalY + 20;   // "(Signature et cachet)" en dessous
-    const signNameY = totalY + 40;   // nom en dessous
-    const sigImgY   = signNameY + 10; // image encore en dessous
-
-    // Signature image (facultative)
-    createSignatureImage(SIGN_CENTER_X, sigImgY);
-
-    // Fait à ...
-    if (faitLieu || faitDate) {
-      createCenteredTextLayerAtX(
-        `<span style="font-weight:bold;">
-          Fait à ${faitLieu || 'Ettelbruck'}, le ${formatDate(faitDate) || 'JJ/MM/AAAA'}
-        </span>`,
-        SIGN_CENTER_X,
-        faitY
-      );
-    }
-
-    // Nom du signataire
     if (signName) {
-      createCenteredTextLayerAtX(
-        `<span>${signName}</span>`,
-        SIGN_CENTER_X,
-        signNameY
+      createTextLayer(
+        `<span style="font-size:13px;">${signName}</span>`,
+        SIGN_CENTER_X, signBlockY + 40, 'center'
       );
     }
 
-    // Légende "Signature et cachet"
-    createCenteredTextLayerAtX(
-      `<span style="font-size:15px;">(Signature et cachet)</span>`,
-      SIGN_CENTER_X,
-      sigTextY
-    );
+    createSignatureImage(SIGN_CENTER_X, signBlockY + 60);
 
     updateTotal();
   }
 
-  // === Export PDF ===
+  /******************************
+   * EXPORT PDF HAUTE QUALITE
+   ******************************/
+
   async function generatePDF() {
     try {
-      // sécurité : vérifier que jsPDF est bien chargé
       if (!window.jspdf || !window.jspdf.jsPDF) {
-        alert("La bibliothèque jsPDF n'est pas chargée (problème de CDN ?)");
+        alert("La bibliotheque jsPDF n'est pas chargee");
         return;
       }
 
+      // Regenerer l'apercu pour s'assurer qu'il est a jour
       generatePreview();
 
+      // Attendre que toutes les images soient chargees
+      await new Promise(resolve => setTimeout(resolve, 500));
+
       const preview = document.getElementById('preview');
+
+      // Utiliser html2canvas avec une haute resolution
       const canvas = await html2canvas(preview, {
-        scale: 2,
-        logging: false
-        // pas de useCORS ici → évite des soucis inutiles en local
+        scale: 3, // Haute resolution
+        useCORS: true,
+        allowTaint: true,
+        logging: false,
+        backgroundColor: '#ffffff'
       });
 
-      const imgData = canvas.toDataURL('image/png');
+      const imgData = canvas.toDataURL('image/png', 1.0);
       const { jsPDF } = window.jspdf;
 
+      // Creer PDF en A4 paysage
       const pdf = new jsPDF({
         orientation: 'landscape',
-        unit: 'px',
+        unit: 'mm',
         format: 'a4'
       });
 
-      const pdfWidth  = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const pdfWidth = pdf.internal.pageSize.getWidth();   // 297 mm
+      const pdfHeight = pdf.internal.pageSize.getHeight(); // 210 mm
 
+      // Ajouter l'image avec la meilleure qualite
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight, '', 'FAST');
 
+      // Nom du fichier avec la date
       const today = new Date();
       const filename = `certificat_${today.toISOString().split('T')[0]}.pdf`;
       pdf.save(filename);
+
     } catch (error) {
-      console.error('PDF Generation Error:', error);
-      alert("Une erreur s'est produite lors de la génération du PDF. Regarde la console (F12) pour le détail.");
+      console.error('Erreur generation PDF:', error);
+      alert("Une erreur s'est produite lors de la generation du PDF. Consultez la console (F12) pour plus de details.");
     }
   }
 
-  // Init
+  /******************************
+   * INITIALISATION
+   ******************************/
+
   window.addEventListener('load', () => {
     document.getElementById('lieuFormation').value = 'Ettelbruck';
     document.getElementById('faitLieu').value = 'Ettelbruck';
     generatePreview();
   });
+
+  // Regenerer l'apercu quand les champs changent
+  document.addEventListener('DOMContentLoaded', () => {
+    const inputs = document.querySelectorAll('input[type="text"], input[type="date"], input[type="time"]');
+    inputs.forEach(input => {
+      input.addEventListener('input', generatePreview);
+    });
+  });
 </script>
-
-
 
 </body>
 </html>
