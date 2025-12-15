@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Certificat de formation – Butzemillen</title>
+
+  <!-- Police proche Avenir -->
+  <link href="https://fonts.cdnfonts.com/css/avenir" rel="stylesheet">
+
+  <!-- html2canvas + jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    * { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Avenir', sans-serif;
+  background-color: #f5f5f7;
+  color: #222;
+}
+
+/* Barre de titre */
+.topbar {
+  background: #91268f;
+  color: #fff;
+  padding: 12px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+
+.topbar-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+.topbar-sub {
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.container {
+  padding: 18px 24px 30px;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 420px minmax(0, 1fr);
+  gap: 22px;
+  align-items: flex-start;
+}
+
+@media (max-width: 1100px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Panneau formulaire */
+#formulaire {
+  background: #ffffff;
+  padding: 18px 20px 20px;
+  border-radius: 14px;
+  box-shadow: 0 8px 18px rgba(15,23,42,0.08);
+  border: 1px solid #e1e1e6;
+  max-height: calc(100vh - 90px);
+  overflow-y: auto;
+}
+
+#formulaire-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#formulaire-header h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #4b1152;
+}
+
+#formulaire-header span {
+  font-size: 11px;
+  color: #666;
+}
+
+fieldset {
+  border: none;
+  border-top: 1px solid #eee;
+  padding: 12px 0 4px;
+  margin: 4px 0 6px;
+}
+
+fieldset:first-of-type {
+  border-top: none;
+  padding-top: 4px;
+}
+
+legend {
+  font-size: 12px;
+  font-weight: 700;
+  color: #91268f;
+  padding: 0;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 6px;
+  margin-bottom: 2px;
+  color: #333;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"],
+select {
+  width: 100%;
+  padding: 7px 9px;
+  border-radius: 6px;
+  border: 1px solid #d5d5dd;
+  font-size: 13px;
+  outline: none;
+  transition: border-color .15s, box-shadow .15s, background-color .15s;
+  background-color: #fafafa;
+}
+
+input:focus,
+select:focus {
+  border-color: #91268f;
+  box-shadow: 0 0 0 1px rgba(145,38,143,0.18);
+  background-color: #fff;
+}
+
+input[type="file"] {
+  font-size: 11px;
+}
+
+small {
+  display: block;
+  font-size: 11px;
+  color: #777;
+  margin-top: 1px;
+}
+
+.inline {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.inline > div {
+  flex: 1;
+}
+
+.muted {
+  font-size: 11px;
+  color: #777;
+}
+
+.chips {
+  display: inline-flex;
+  gap: 6px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-size: 11px;
+  border: 1px solid #e0c1e7;
+  color: #6a1c6a;
+  background: #faf2ff;
+  cursor: pointer;
+  user-select: none;
+}
+
+.chip:hover {
+  background: #f2e4ff;
+}
+
+.day-block {
+  margin-top: 6px;
+}
+
+.day-title {
+  font-weight: 700;
+  font-size: 12px;
+  color: #4b1152;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+
+.day-title input[type="checkbox"] {
+  margin: 0;
+}
+
+#total-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 8px;
+}
+
+#total-line span {
+  font-size: 12px;
+}
+
+#totalHoursDisplay {
+  font-weight: 700;
+  color: #4b1152;
+}
+
+#buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+button {
+  flex: 1;
+  padding: 9px 12px;
+  border-radius: 999px;
+  border: none;
+  background-color: #91268f;
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.16);
+  transition: background-color .2s, transform .1s, box-shadow .2s;
+  white-space: nowrap;
+}
+
+button.secondary {
+  background-color: #f3ecf7;
+  color: #4b1152;
+  box-shadow: none;
+  border: 1px solid #dfc6ea;
+}
+
+button:hover {
+  background-color: #6d1f6b;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.22);
+}
+
+button.secondary:hover {
+  background-color: #e9dcf5;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  transform: translateY(-0.5px);
+}
+
+/* Carte aperçu */
+#preview-wrapper {
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 14px;
+  box-shadow: 0 8px 18px rgba(15,23,42,0.08);
+  border: 1px solid #e1e1e6;
+}
+
+#preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+#preview-header h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #4b1152;
+}
+
+#preview-header span {
+  font-size: 11px;
+  color: #777;
+}
+
+/* Zone du certificat */
+#preview {
+  position: relative;
+  width: 1536px;
+  height: 1086px;
+  background-image: url('https://raw.githubusercontent.com/Pedro95450/certificat-butzemillen/refs/heads/main/Certificat-de-formation-bg01.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 1px solid #d5d5dd;
+  overflow: hidden;
+}
+
+.preview-scroller {
+  max-width: 100%;
+  overflow: auto;
+  border-radius: 10px;
+}
+
+.text-layer {
+  position: absolute;
+  pointer-events: none;
+  white-space: normal;
+  line-height: 1.25;
+  font-size: 18px;
+  letter-spacing: 0.4px;
+  color: #91268f;
+  font-family: 'Avenir', sans-serif;
+  text-align: left;
+}
+
+.line-layer {
+  position: absolute;
+  background: #f6c843; /* jaune */
+  pointer-events: none;
+}
+
+.signature-layer {
+  position: absolute;
+  pointer-events: none;
+}
+
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="topbar-title">Certificats de formation internes</div>
+  </div>
+  <div class="topbar-sub">Butzemillen – Crèches &amp; foyers de jour</div>
+</div>
+
+<div class="container">
+  <div class="layout">
+
+    <!-- FORMULAIRE -->
+    <div id="formulaire">
+      <div id="formulaire-header">
+        <h2>Formulaire certificat</h2>
+        <span>Jusqu’à 5 jours • &lt; 1 min</span>
+      </div>
+
+      <fieldset>
+        <legend>1. Informations générales</legend>
+
+        <label for="nomPrenom">Participant·e·s</label>
+        <input type="text" id="nomPrenom"
+               placeholder="GALASSO Alexandra, JANSSENS Tinne, ..." />
+        <small>Indiquez les noms de famille en MAJUSCULES, séparés par des virgules.</small>
+
+        <label for="formation">Intitulé de la formation</label>
+        <input type="text" id="formation"
+               placeholder="Éducation non formelle et soins de l’enfant" />
+        <div class="chips">
+          <span class="chip" onclick="presetFormation('Éducation non formelle et soins de l’enfant')">
+            Intitulé standard
+          </span>
+        </div>
+
+        <label for="lieuFormation">Lieu de la formation</label>
+        <input type="text" id="lieuFormation" placeholder="Ettelbruck" />
+      </fieldset>
+
+      <fieldset>
+        <legend>2. Séances &amp; durée (max. 5 jours)</legend>
+        <small class="muted">Cocher les jours utilisés, puis saisir date et horaires.</small>
+
+        <!-- Jour 1 -->
+        <div class="day-block">
+          <div class="day-title">
+            <label>
+              <input type="checkbox" id="day1Enable" checked onchange="toggleDay(1)">
+              Jour 1
+            </label>
+          </div>
+          <div id="day1Fields" style="display:block;">
+            <div class="inline">
+              <div>
+                <label for="day1Date">Date</label>
+                <input type="date" id="day1Date" />
+              </div>
+              <div>
+                <label>Horaires</label>
+                <div class="inline" style="gap:4px;">
+                  <input type="time" id="day1Start" onchange="updateTotal()" />
+                  <input type="time" id="day1End" onchange="updateTotal()" />
+                </div>
+                <small>Début – fin</small>
+              </div>
+            </div>
+            <label for="day1Titre">Intitulé de la séance</label>
+            <input type="text" id="day1Titre" placeholder="Éducation non formelle" />
+          </div>
+        </div>
+
+        <!-- Jour 2 -->
+        <div class="day-block">
+          <div class="day-title">
+            <label>
+              <input type="checkbox" id="day2Enable" onchange="toggleDay(2)">
+              Jour 2 (facultatif)
+            </label>
+          </div>
+          <div id="day2Fields" style="display:none;">
+            <div class="inline">
+              <div>
+                <label for="day2Date">Date</label>
+                <input type="date" id="day2Date" />
+              </div>
+              <div>
+                <label>Horaires</label>
+                <div class="inline" style="gap:4px;">
+                  <input type="time" id="day2Start" onchange="updateTotal()" />
+                  <input type="time" id="day2End" onchange="updateTotal()" />
+                </div>
+                <small>Début – fin</small>
+              </div>
+            </div>
+            <label for="day2Titre">Intitulé de la séance</label>
+            <input type="text" id="day2Titre" placeholder="Soins de l’enfant" />
+          </div>
+        </div>
+
+        <!-- Jour 3 -->
+        <div class="day-block">
+          <div class="day-title">
+            <label>
+              <input type="checkbox" id="day3Enable" onchange="toggleDay(3)">
+              Jour 3 (facultatif)
+            </label>
+          </div>
+          <div id="day3Fields" style="display:none;">
+            <div class="inline">
+              <div>
+                <label for="day3Date">Date</label>
+                <input type="date" id="day3Date" />
+              </div>
+              <div>
+                <label>Horaires</label>
+                <div class="inline" style="gap:4px;">
+                  <input type="time" id="day3Start" onchange="updateTotal()" />
+                  <input type="time" id="day3End" onchange="updateTotal()" />
+                </div>
+                <small>Début – fin</small>
+              </div>
+            </div>
+            <label for="day3Titre">Intitulé de la séance</label>
+            <input type="text" id="day3Titre" placeholder="..." />
+          </div>
+        </div>
+
+        <!-- Jour 4 -->
+        <div class="day-block">
+          <div class="day-title">
+            <label>
+              <input type="checkbox" id="day4Enable" onchange="toggleDay(4)">
+              Jour 4 (facultatif)
+            </label>
+          </div>
+          <div id="day4Fields" style="display:none;">
+            <div class="inline">
+              <div>
+                <label for="day4Date">Date</label>
+                <input type="date" id="day4Date" />
+              </div>
+              <div>
+                <label>Horaires</label>
+                <div class="inline" style="gap:4px;">
+                  <input type="time" id="day4Start" onchange="updateTotal()" />
+                  <input type="time" id="day4End" onchange="updateTotal()" />
+                </div>
+                <small>Début – fin</small>
+              </div>
+            </div>
+            <label for="day4Titre">Intitulé de la séance</label>
+            <input type="text" id="day4Titre" placeholder="..." />
+          </div>
+        </div>
+
+        <!-- Jour 5 -->
+        <div class="day-block">
+          <div class="day-title">
+            <label>
+              <input type="checkbox" id="day5Enable" onchange="toggleDay(5)">
+              Jour 5 (facultatif)
+            </label>
+          </div>
+          <div id="day5Fields" style="display:none;">
+            <div class="inline">
+              <div>
+                <label for="day5Date">Date</label>
+                <input type="date" id="day5Date" />
+              </div>
+              <div>
+                <label>Horaires</label>
+                <div class="inline" style="gap:4px;">
+                  <input type="time" id="day5Start" onchange="updateTotal()" />
+                  <input type="time" id="day5End" onchange="updateTotal()" />
+                </div>
+                <small>Début – fin</small>
+              </div>
+            </div>
+            <label for="day5Titre">Intitulé de la séance</label>
+            <input type="text" id="day5Titre" placeholder="..." />
+          </div>
+        </div>
+
+        <div id="total-line">
+          <span class="muted">Durée totale calculée :</span>
+          <span id="totalHoursDisplay">0 h</span>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>3. Signature &amp; date</legend>
+
+        <label for="faitLieu">Lieu de rédaction</label>
+        <input type="text" id="faitLieu" placeholder="Ettelbruck" />
+
+        <label for="faitDate">Date de rédaction</label>
+        <input type="date" id="faitDate" />
+        <small>Affiché en bas du certificat (« Fait à …, le … »).</small>
+
+        <label for="signName">Nom / fonction du signataire</label>
+        <input type="text" id="signName" placeholder="Nom du directeur / de la directrice" />
+
+        <label for="signatureFile">Signature (image)</label>
+        <input type="file" id="signatureFile" accept="image/*" onchange="loadSignature(event)">
+        <small>Importer une signature scannée (PNG/JPG) sur fond blanc ou transparent.</small>
+      </fieldset>
+
+      <div id="buttons">
+        <button type="button" class="secondary" onclick="generatePreview()">Mettre à jour l’aperçu</button>
+        <button type="button" onclick="generatePDF()">Télécharger le PDF</button>
+      </div>
+    </div>
+
+    <!-- APERÇU CERTIFICAT -->
+    <div id="preview-wrapper">
+      <div id="preview-header">
+        <h3>Aperçu du certificat</h3>
+        <span>Format PDF</span>
+      </div>
+      <div class="preview-scroller">
+        <div id="preview"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// --- Constantes layout / signature ---
+const SIGN_MAX_WIDTH   = 260;   // largeur normale de la signature
+const BOTTOM_MARGIN    = 30;    // marge en bas de la page
+const OFFSET_Y         = 2;     // petit ajustement vertical global
+
+let signatureDataUrl = null;
+let signatureRatio   = null;    // hauteur / largeur
+
+// === Utilitaires ===
+function presetFormation(value) {
+  document.getElementById('formation').value = value;
+  generatePreview();
+}
+
+function formatDate(isoDateStr) {
+  if (!isoDateStr) return '';
+  const p = isoDateStr.split('-');
+  if (p.length < 3) return isoDateStr;
+  return `${p[2]}/${p[1]}/${p[0]}`;
+}
+
+function parseTimeToHours(str) {
+  if (!str || !str.includes(':')) return 0;
+  const [HH, MM] = str.split(':');
+  const h = parseInt(HH, 10) || 0;
+  const m = parseInt(MM, 10) || 0;
+  return h + m / 60;
+}
+
+function formatTimeDisplay(str) {
+  if (!str || !str.includes(':')) return '';
+  const [HH, MM] = str.split(':');
+  return `${HH}h${MM}`;
+}
+
+function calcDayHours(startId, endId) {
+  const startStr = document.getElementById(startId).value;
+  const endStr   = document.getElementById(endId).value;
+  const startVal = parseTimeToHours(startStr);
+  const endVal   = parseTimeToHours(endStr);
+  return Math.max(endVal - startVal, 0);
+}
+
+function updateTotal() {
+  let total = 0;
+  for (let i = 1; i <= 5; i++) {
+    if (!document.getElementById(`day${i}Enable`).checked) continue;
+    total += calcDayHours(`day${i}Start`, `day${i}End`);
+  }
+  total = Math.round(total * 100) / 100;
+  const label = total <= 0 ? '0 h' : `${total.toString().replace('.', ',')} h`;
+  document.getElementById('totalHoursDisplay').textContent = label;
+}
+
+function toggleDay(i) {
+  const enable = document.getElementById(`day${i}Enable`).checked;
+  const fields = document.getElementById(`day${i}Fields`);
+  fields.style.display = enable ? 'block' : 'none';
+
+  if (!enable) {
+    document.getElementById(`day${i}Date`).value  = '';
+    document.getElementById(`day${i}Start`).value = '';
+    document.getElementById(`day${i}End`).value   = '';
+    document.getElementById(`day${i}Titre`).value = '';
+  }
+  updateTotal();
+  generatePreview();
+}
+
+// Chargement de la signature
+function loadSignature(event) {
+  const file = event.target.files[0];
+  if (!file) {
+    signatureDataUrl = null;
+    signatureRatio   = null;
+    generatePreview();
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = new Image();
+    img.onload = function() {
+      signatureDataUrl = e.target.result;
+      signatureRatio   = img.naturalHeight / img.naturalWidth;
+      generatePreview();
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearLayers() {
+  document.querySelectorAll('.text-layer').forEach(el => el.remove());
+  document.querySelectorAll('.line-layer').forEach(el => el.remove());
+  document.querySelectorAll('.signature-layer').forEach(el => el.remove());
+}
+
+// --- Helpers calques ---
+function createTextLayer(htmlContent, x, y, maxWidth) {
+  const div = document.createElement('div');
+  div.className = 'text-layer';
+  div.style.left = x + 'px';
+  div.style.top  = y + 'px';
+  if (maxWidth) div.style.width = maxWidth + 'px';
+  div.innerHTML  = htmlContent;
+  document.getElementById('preview').appendChild(div);
+}
+
+function createCenteredTextLayerAtX(htmlContent, centerX, y) {
+  const div = document.createElement('div');
+  div.className = 'text-layer';
+  div.style.top = y + 'px';
+  div.style.left = '0px';
+  div.innerHTML = htmlContent;
+  document.getElementById('preview').appendChild(div);
+  const w = div.offsetWidth;
+  div.style.left = (centerX - w / 2) + 'px';
+}
+
+function measureCellHeight(text, maxWidth) {
+  if (!text) return 0;
+  const div = document.createElement('div');
+  div.className = 'text-layer';
+  div.style.left = '0px';
+  div.style.top  = '0px';
+  div.style.visibility = 'hidden';
+  div.style.width = maxWidth + 'px';
+  div.innerHTML = text;
+  document.getElementById('preview').appendChild(div);
+  const h = div.offsetHeight;
+  div.remove();
+  return h;
+}
+
+function createSignatureImage(centerX, y, width) {
+  if (!signatureDataUrl || !signatureRatio) return;
+  const img = document.createElement('img');
+  img.src = signatureDataUrl;
+  img.className = 'signature-layer';
+  const w = width;
+  const h = w * signatureRatio;
+  img.style.width  = w + 'px';
+  img.style.height = h + 'px';
+  img.style.top    = y + 'px';
+  img.style.left   = (centerX - w / 2) + 'px';
+  document.getElementById('preview').appendChild(img);
+}
+
+// === Paramètres tableau ===
+const TABLE_TEXT_TOP = 582 + OFFSET_Y;
+const TABLE_TOP      = TABLE_TEXT_TOP + 28;
+const TABLE_LEFT     = 330;
+const TABLE_WIDTH    = 860;
+const ROW_SPACING    = 38;
+
+const DATE_X  = TABLE_LEFT + 12;
+const TIME_X  = DATE_X + 180;
+const TITRE_X = TIME_X + 240;
+
+const V1_X = TIME_X - 18;
+const V2_X = TITRE_X - 18;
+
+const SIGN_CENTER_X = 1180;
+
+const DATE_COL_WIDTH  = TIME_X - DATE_X;
+const TIME_COL_WIDTH  = TITRE_X - TIME_X;
+const TITRE_COL_WIDTH = (TABLE_LEFT + TABLE_WIDTH) - TITRE_X;
+
+function createHLine(y) {
+  const div = document.createElement('div');
+  div.className = 'line-layer';
+  div.style.left = TABLE_LEFT + 'px';
+  div.style.top  = y + 'px';
+  div.style.width  = TABLE_WIDTH + 'px';
+  div.style.height = '2px';
+  document.getElementById('preview').appendChild(div);
+}
+
+function createVLine(x, top, height) {
+  const div = document.createElement('div');
+  div.className = 'line-layer';
+  div.style.left = x + 'px';
+  div.style.top  = top + 'px';
+  div.style.width  = '2px';
+  div.style.height = height + 'px';
+  document.getElementById('preview').appendChild(div);
+}
+
+// === Génération de l’aperçu ===
+function generatePreview() {
+  clearLayers();
+
+  const centerX = 768;
+
+  const nomPrenom = document.getElementById('nomPrenom').value.trim();
+  const formation = document.getElementById('formation').value.trim();
+  const lieuForm  = document.getElementById('lieuFormation').value.trim();
+  const faitLieu  = document.getElementById('faitLieu').value.trim();
+  const faitDate  = document.getElementById('faitDate').value.trim();
+  const signName  = document.getElementById('signName').value.trim();
+
+  // Jours actifs
+  const days = [];
+  for (let i = 1; i <= 5; i++) {
+    if (!document.getElementById(`day${i}Enable`).checked) continue;
+    const date  = document.getElementById(`day${i}Date`).value.trim();
+    const start = document.getElementById(`day${i}Start`).value;
+    const end   = document.getElementById(`day${i}End`).value;
+    const hours = calcDayHours(`day${i}Start`, `day${i}End`);
+    const titre = document.getElementById(`day${i}Titre`).value.trim();
+    if (!date && !start && !end && !titre) continue;
+    days.push({ date, start, end, hours, titre });
+  }
+
+  // Total heures
+  let totalHours = 0;
+  days.forEach(d => totalHours += d.hours);
+  totalHours = Math.round(totalHours * 100) / 100;
+  const heureLabel = (totalHours === 1) ? 'heure' : 'heures';
+  const totalStr = totalHours > 0
+    ? `${totalHours.toString().replace('.', ',')} ${heureLabel}`
+    : '';
+
+  const nbRows = Math.max(days.length, 1);
+
+  // Hauteurs dynamiques
+  const rowHeights   = [];
+  const titreHeights = [];
+
+  for (let i = 0; i < nbRows; i++) {
+    const d = days[i];
+    let rowHeight = ROW_SPACING;
+    let hTitre = 0;
+
+    if (d && d.titre) {
+      hTitre = measureCellHeight(d.titre, TITRE_COL_WIDTH);
+      rowHeight = Math.max(rowHeight, hTitre + 20); // 10 top + 10 bottom
+    }
+
+    rowHeights.push(rowHeight);
+    titreHeights.push(hTitre);
+  }
+
+  // Positions Y des lignes
+  const rowTops = [];
+  let currentTop = TABLE_TOP;
+  rowTops.push(currentTop);
+  rowHeights.forEach(h => {
+    currentTop += h;
+    rowTops.push(currentTop);
+  });
+
+  const tableBottom = rowTops[rowTops.length - 1];
+
+  // Titres du tableau
+  createTextLayer(`<span style="font-weight:bold; font-size:18px;">Date</span>`,
+                  DATE_X, TABLE_TEXT_TOP);
+  createTextLayer(`<span style="font-weight:bold; font-size:18px;">Horaire</span>`,
+                  TIME_X, TABLE_TEXT_TOP);
+  createTextLayer(`<span style="font-weight:bold; font-size:18px;">Intitulé de la séance</span>`,
+                  TITRE_X, TABLE_TEXT_TOP);
+
+  // Lignes horizontales
+  for (let i = 0; i < rowTops.length; i++) {
+    createHLine(rowTops[i]);
+  }
+
+  // Lignes verticales
+  const vTop    = TABLE_TOP - 35;
+  const vHeight = (tableBottom + 35) - vTop;
+  createVLine(V1_X, vTop, vHeight);
+  createVLine(V2_X, vTop, vHeight);
+
+  // Contenu des lignes
+  for (let i = 0; i < days.length; i++) {
+    const d = days[i];
+    const baseY = rowTops[i];
+    const rowHeight = rowHeights[i];
+    const yDateTime = baseY + 10;
+
+    if (d.date) {
+      createTextLayer(formatDate(d.date), DATE_X, yDateTime, DATE_COL_WIDTH);
+    }
+    if (d.start || d.end) {
+      createTextLayer(
+        `${formatTimeDisplay(d.start)} – ${formatTimeDisplay(d.end)}`,
+        TIME_X, yDateTime, TIME_COL_WIDTH
+      );
+    }
+    if (d.titre) {
+      const hTitre = titreHeights[i] || measureCellHeight(d.titre, TITRE_COL_WIDTH);
+      const titreY = baseY + (rowHeight - hTitre) / 2;
+      createTextLayer(d.titre, TITRE_X, titreY, TITRE_COL_WIDTH);
+    }
+  }
+
+  // Texte principal centré
+  const bigTextHTML = `
+<div style="text-align:center;">
+  <span style="font-weight:bold;">Butzemillen s.à.r.l</span>
+  <span> certifie que</span>
+  <br><br>
+  <span style="font-weight:bold;">
+    ${nomPrenom || 'GALASSO Alexandra, JANSSENS Tinne, ...'}
+  </span>
+  <br><br>
+  <span>ont participé(e)s à la formation intitulée</span>
+  <br>
+  <span style="font-weight:bold;">
+    « ${formation || 'Éducation non formelle et soins de l’enfant'} »
+  </span>
+  <br><br>
+  <span>ayant eu lieu à </span>
+  <span style="font-weight:bold;">${lieuForm || 'Ettelbruck'}</span>
+  <span>, le :</span>
+</div>`;
+  createCenteredTextLayerAtX(bigTextHTML, centerX, 370 + OFFSET_Y);
+
+  // --- Total + footer alignés (positions fixes) ---
+  const previewEl     = document.getElementById('preview');
+  const previewHeight = previewEl.offsetHeight || 1086;
+
+  const totalY  = tableBottom + 65; // texte "Total"
+  const footerY = totalY;           // "Fait à..." au même niveau
+
+  // Texte "Total"
+  if (totalStr) {
+    createTextLayer(
+      `<span style="font-weight:bold;">
+        Total d’heures de formation : ${totalStr}
+      </span>`,
+      TABLE_LEFT,
+      totalY
+    );
+  }
+
+  // Textes de pied de page (toujours à la même hauteur)
+  const faitY     = footerY;
+  const sigTextY  = faitY + 20;
+  const signNameY = faitY + 40;
+
+  // Position théorique de la signature
+  let sigImgY = signNameY + 10;
+  let sigWidth = SIGN_MAX_WIDTH;
+
+  if (signatureRatio) {
+    // Hauteur avec largeur normale
+    let sigH = sigWidth * signatureRatio;
+
+    // Y max autorisé pour le bas de la signature
+    const maxBottom = previewHeight - BOTTOM_MARGIN;
+
+    if (sigImgY + sigH > maxBottom) {
+      // on calcule la largeur maximale possible pour rentrer dans la page
+      const maxH = maxBottom - sigImgY;
+      const maxW = maxH / signatureRatio;
+      sigWidth = Math.max(60, Math.min(SIGN_MAX_WIDTH, maxW)); // 60px min pour ne pas disparaître
+    }
+  }
+
+  // Signature image (taille éventuellement réduite)
+  createSignatureImage(SIGN_CENTER_X, sigImgY, sigWidth);
+
+  if (faitLieu || faitDate) {
+    createCenteredTextLayerAtX(
+      `<span style="font-weight:bold;">
+        Fait à ${faitLieu || 'Ettelbruck'}, le ${formatDate(faitDate) || 'JJ/MM/AAAA'}
+      </span>`,
+      SIGN_CENTER_X,
+      faitY
+    );
+  }
+
+  if (signName) {
+    createCenteredTextLayerAtX(
+      `<span style="font-size:15px;font-weight:bold;">${signName}</span>`,
+      SIGN_CENTER_X,
+      signNameY
+    );
+  }
+
+  createCenteredTextLayerAtX(
+    `<span style="font-size:15px;">(Signature et cachet)</span>`,
+    SIGN_CENTER_X,
+    sigTextY
+  );
+
+  updateTotal();
+}
+
+// === Export PDF ===
+async function generatePDF() {
+  try {
+    if (!window.jspdf || !window.jspdf.jsPDF) {
+      alert("La bibliothèque jsPDF n'est pas chargée (problème de CDN ?)");
+      return;
+    }
+
+    generatePreview(); // mise à jour avant capture
+
+    const preview = document.getElementById('preview');
+    const canvas = await html2canvas(preview, {
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      logging: false
+    });
+
+    const imgData = canvas.toDataURL('image/png');
+    const { jsPDF } = window.jspdf;
+
+    const pdf = new jsPDF({
+      orientation: 'landscape',
+      unit: 'px',
+      format: [preview.offsetWidth, preview.offsetHeight]
+    });
+
+    pdf.addImage(imgData, 'PNG', 0, 0, preview.offsetWidth, preview.offsetHeight, '', 'FAST');
+
+    const today = new Date();
+    const filename = `certificat_${today.toISOString().split('T')[0]}.pdf`;
+    pdf.save(filename);
+  } catch (error) {
+    console.error('PDF Generation Error:', error);
+    alert("Une erreur s'est produite lors de la génération du PDF. Regarde la console (F12) pour le détail.");
+  }
+}
+
+// Init
+window.addEventListener('load', () => {
+  document.getElementById('lieuFormation').value = 'Ettelbruck';
+  document.getElementById('faitLieu').value      = 'Ettelbruck';
+  generatePreview();
+});
+
+</script>
+
+</body>
+</html>
